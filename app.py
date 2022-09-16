@@ -247,7 +247,7 @@ def quote():
 
 
 @app.route("/register", methods=["GET", "POST"])
-def register():
+def register():  # type: ignore
     """Register user"""
     if request.method == "POST":
         if not request.form.get("username"):  # type: ignore
@@ -323,3 +323,26 @@ def sell():
         return redirect("/")
     elif request.method == "GET":
         return render_template("sell.html", stock_list=get_current_stock_list())
+
+@app.route("/addcash", methods=["GET", "POST"])
+def add_cash():
+    """add cash to user"""
+    if request.method == "POST":
+        user = get_user()
+        user_id = user['id']
+        additional_cash = request.form.get("cash") # type: ignore
+        if not additional_cash:
+            return apology("enter cash amount", 403)
+        additional_cash = int(additional_cash)
+        if additional_cash <= 0:
+            return apology("enter positive cash amount", 403)
+
+        updated_cash = user['cash'] + additional_cash
+
+        cursor.execute("UPDATE users SET cash = ? WHERE id = ?", (updated_cash, user_id))  # type: ignore
+        sqlite_connection.commit()
+
+        return redirect("/")
+
+    elif request.method == "GET":
+        return render_template("add_cash.html")
