@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Stock History
+{% endblock %}
+
+<!-- todo: change down here to history stuffs -->
+{% block main %}
+    <h2 class="fs-10 fw-semibold text-center">Stock Transaction History</h3>
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Transaction Type</th>
+                <th>Company</th>
+                <th>Number of shares</th>
+                <th>Price per share</th>
+                <th>Price for batch</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in stock_history %}
+                <tr>
+                    <td>{{ transaction["datetime"] }}</td>
+                    <td>{{ transaction["type"] }}</td>
+                    <td>{{ upper(transaction["symbol"]) }}</td>
+                    <td>{{ transaction["shares"] }}</td>
+                    <td>{{ round(transaction["batch_price"] / transaction["shares"]) }}</td>
+                    <td>{{ transaction["batch_price"]}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

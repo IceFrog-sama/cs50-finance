@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell stocks
+{% endblock %}
+
+{% block main %}
+    <h2 class="fs-10 fw-semibold text-center">Sell Stocks</h2>
+    <br>
+    <form action="/sell" method="post">
+        <label for="symbol">Choose stock symbol:</label>
+        <select name="symbol">
+            {% for stock in stock_list %}
+            <div class="mb-3">
+                <option value= {{stock.symbol}}>{{ upper(stock.symbol) }}</option>
+            </div>
+            {% endfor %}
+        </select>
+        <br><br>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="shares" placeholder="Number of shares" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Sell stocks</button>
+    </form>
+{% endblock %}

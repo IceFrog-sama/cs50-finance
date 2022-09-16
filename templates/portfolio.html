@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    User Portfolio
+{% endblock %}
+
+<!-- pass in user obj, stock obj, total value of cash n stock -->
+{% block main %}
+    <h3 class="fs-10 fw-semibold">Username: {{ user["username"] }}</h3>
+    <h3 class="fs-10 fw-semibold">Cash balance: {{ round(user["cash"]) }}</h3>
+    <h3 class="fs-10 fw-semibold">Grand total: {{ round(total_stock_value + user["cash"]) }}</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Current price of stock</th>
+                <th>Number of shares</th>
+                <th>Value of shares</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stock_list %}
+                <tr>
+                    <td>{{ upper(stock["symbol"]) }}</td>
+                    <td>{{ round(lookup(stock["symbol"])["price"]) }}</td>
+                    <td>{{ stock["shares"] }}</td>
+                    <td>{{ round(lookup(stock["symbol"])["price"] * stock["shares"]) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3 class="mb-5 fs-10 fw-semibold">Total stock value: {{ round(total_stock_value) }}</h3>
+{% endblock %}

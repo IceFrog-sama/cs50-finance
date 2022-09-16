@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Display Stock Quote
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Stock Name</td>
+                <td>{{ stock_quote["name"] }}</td>
+            </tr>
+            <tr>
+                <td>Stock Price</td>
+                <td>{{ stock_quote["price"] }}</td>
+            </tr>
+            <tr>
+                <td>Stock Symbol</td>
+                <td>{{ stock_quote["symbol"] }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
